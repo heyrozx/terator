@@ -1,4 +1,4 @@
-## 1.7.0 (16) - RELEASED
+## 1.7.0 (17) - RELEASED
 
 * Perbaikan tinggi editor surat (buat & edit) yang mengecil saat keyboard muncul
 * Tombol premium di navbar lebih kecil dengan bayangan lebih tipis agar tidak terpotong
