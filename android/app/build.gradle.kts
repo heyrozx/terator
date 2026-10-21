@@ -40,6 +40,13 @@ android {
         multiDexEnabled = true
     }
 
+    // Aplikasi hanya berbahasa Indonesia. Buang resource bahasa lain dari
+    // library (AndroidX, RevenueCat, dll.) agar Play Console tidak menganggap
+    // aplikasi mendukung bahasa yang ketentuan langganannya tidak diterjemahkan.
+    androidResources {
+        localeFilters += listOf("in", "id")
+    }
+
     signingConfigs {
         create("release") {
             keyAlias = keystoreProperties["keyAlias"] as String

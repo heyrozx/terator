@@ -24,7 +24,10 @@ class SubscriptionCubit extends Cubit<SubscriptionState> {
 
       late PurchasesConfiguration configuration;
       if (Platform.isAndroid) {
-        configuration = PurchasesConfiguration(revenueCatGoogleApiKey);
+        // Paywall RevenueCat selalu Bahasa Indonesia, apa pun bahasa perangkat,
+        // agar ketentuan langganan tidak tampil setengah diterjemahkan.
+        configuration = PurchasesConfiguration(revenueCatGoogleApiKey)
+          ..preferredUILocaleOverride = 'id_ID';
       }
       // Hanya Android sesuai kebutuhan
       if (Platform.isAndroid) {

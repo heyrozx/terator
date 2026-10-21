@@ -9,6 +9,8 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
+  flutter_localizations:
+    sdk: flutter
   flutter_native_html_to_pdf: ^3.0.0
   flutter_file_saver: ^0.9.0
   path_provider: ^2.1.5

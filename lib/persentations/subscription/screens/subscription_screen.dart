@@ -3,6 +3,7 @@ import 'package:lucide_icons_flutter/lucide_icons.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:terator/core/styles.dart';
 import 'package:terator/persentations/subscription/cubit/subscription_cubit.dart';
+import 'package:terator/persentations/subscription/widgets/subscription_terms.dart';
 
 class SubscriptionScreen extends StatelessWidget {
   const SubscriptionScreen({super.key});
@@ -11,7 +12,7 @@ class SubscriptionScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppTheme.modernAppBar(
-        title: 'Subscription',
+        title: 'Langganan',
         showBack: true,
         context: context,
       ),
@@ -89,14 +90,8 @@ class SubscriptionScreen extends StatelessWidget {
                     color: kTextPrimary,
                   ),
                 ),
-                const SizedBox(height: 4),
-                const Text(
-                  'Paket akan muncul melalui paywall RevenueCat',
-                  style: TextStyle(
-                    fontSize: 13,
-                    color: kTextSecondary,
-                  ),
-                ),
+                const SizedBox(height: 12),
+                const SubscriptionTerms(),
                 const SizedBox(height: 16),
 
                 // ─── Upgrade Button ───
