@@ -82,11 +82,11 @@ class PremiumGate {
                 'Prioritas Support',
                 'Dapatkan bantuan prioritas dari tim kami',
               ),
-              const SizedBox(height: 20),
+              const SizedBox(height: 16),
 
-              // ─── Subscription terms (Google Play Subscriptions policy) ───
+              // ─── Subscription terms link (Google Play Subscriptions policy) ───
               const SubscriptionTerms(),
-              const SizedBox(height: 20),
+              const SizedBox(height: 12),
 
               // ─── Upgrade Button ───
               Builder(builder: (ctx) {

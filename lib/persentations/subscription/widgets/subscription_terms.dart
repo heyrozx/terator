@@ -7,19 +7,62 @@ import 'package:url_launcher/url_launcher.dart';
 const String _urlManageSubscriptions =
     'https://play.google.com/store/account/subscriptions?package=com.caraguna.terator';
 
-/// Ketentuan langganan yang wajib terlihat sebelum pengguna membuka paywall
-/// (Kebijakan Langganan Google Play): harga, periode tagihan, masa uji coba,
+/// Tautan "Ketentuan Langganan" yang ditampilkan sebelum pengguna membuka
+/// paywall. Saat diketuk membuka modal berisi ketentuan lengkap (Kebijakan
+/// Langganan Google Play): harga, periode tagihan, masa uji coba,
 /// perpanjangan otomatis, cara membatalkan, dan bahwa langganan tidak wajib.
-/// Harga diambil dari Google Play melalui RevenueCat sehingga selalu sesuai
-/// dengan yang ditagihkan.
-class SubscriptionTerms extends StatefulWidget {
+class SubscriptionTerms extends StatelessWidget {
   const SubscriptionTerms({super.key});
 
+  static Future<void> showDetails(BuildContext context) {
+    return showDialog<void>(
+      context: context,
+      builder: (context) => const _SubscriptionTermsDialog(),
+    );
+  }
+
   @override
-  State<SubscriptionTerms> createState() => _SubscriptionTermsState();
+  Widget build(BuildContext context) {
+    return Center(
+      child: InkWell(
+        borderRadius: BorderRadius.circular(kRadiusSm),
+        onTap: () => showDetails(context),
+        child: const Padding(
+          padding: EdgeInsets.symmetric(horizontal: 8, vertical: 6),
+          child: Row(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Icon(Icons.info_outline_rounded, size: 16, color: kPrimary),
+              SizedBox(width: 6),
+              Text(
+                'Lihat Ketentuan Langganan',
+                style: TextStyle(
+                  color: kPrimary,
+                  fontSize: 13,
+                  fontWeight: FontWeight.w600,
+                  decoration: TextDecoration.underline,
+                  decorationColor: kPrimary,
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
 }
 
-class _SubscriptionTermsState extends State<SubscriptionTerms> {
+/// Isi modal ketentuan langganan. Harga diambil dari Google Play melalui
+/// RevenueCat sehingga selalu sesuai dengan yang ditagihkan.
+class _SubscriptionTermsDialog extends StatefulWidget {
+  const _SubscriptionTermsDialog();
+
+  @override
+  State<_SubscriptionTermsDialog> createState() =>
+      _SubscriptionTermsDialogState();
+}
+
+class _SubscriptionTermsDialogState extends State<_SubscriptionTermsDialog> {
   late final Future<List<Package>> _packages = _loadPackages();
 
   Future<List<Package>> _loadPackages() async {
@@ -35,90 +78,100 @@ class _SubscriptionTermsState extends State<SubscriptionTerms> {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      width: double.infinity,
-      padding: const EdgeInsets.all(16),
-      decoration: BoxDecoration(
-        color: kSurfaceVariant,
-        borderRadius: BorderRadius.circular(kRadiusMd),
+    return AlertDialog(
+      backgroundColor: Colors.white,
+      surfaceTintColor: Colors.transparent,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(kRadiusLg),
       ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          const Text(
-            'Ketentuan Langganan',
-            style: TextStyle(
-              fontSize: 14,
-              fontWeight: FontWeight.w700,
-              color: kTextPrimary,
-            ),
-          ),
-          const SizedBox(height: 10),
-          FutureBuilder<List<Package>>(
-            future: _packages,
-            builder: (context, snapshot) {
-              if (snapshot.connectionState != ConnectionState.done) {
-                return const Padding(
-                  padding: EdgeInsets.symmetric(vertical: 8),
-                  child: Center(
-                    child: SizedBox(
-                      width: 18,
-                      height: 18,
-                      child: CircularProgressIndicator(strokeWidth: 2),
+      title: const Text(
+        'Ketentuan Langganan',
+        style: TextStyle(
+          fontSize: 17,
+          fontWeight: FontWeight.w700,
+          color: kTextPrimary,
+        ),
+      ),
+      content: SingleChildScrollView(
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            FutureBuilder<List<Package>>(
+              future: _packages,
+              builder: (context, snapshot) {
+                if (snapshot.connectionState != ConnectionState.done) {
+                  return const Padding(
+                    padding: EdgeInsets.symmetric(vertical: 8),
+                    child: Center(
+                      child: SizedBox(
+                        width: 18,
+                        height: 18,
+                        child: CircularProgressIndicator(strokeWidth: 2),
+                      ),
                     ),
-                  ),
+                  );
+                }
+                final packages = snapshot.data ?? [];
+                if (packages.isEmpty) {
+                  return _term(
+                    'Harga dan periode tagihan ditampilkan di halaman paket '
+                    'sebelum Anda membayar.',
+                  );
+                }
+                return Column(
+                  children: packages.map(_packageRow).toList(),
                 );
-              }
-              final packages = snapshot.data ?? [];
-              if (packages.isEmpty) {
-                return _term(
-                  'Harga dan periode tagihan ditampilkan di halaman paket '
-                  'sebelum Anda membayar.',
-                );
-              }
-              return Column(
-                children: packages.map(_packageRow).toList(),
-              );
-            },
-          ),
-          const SizedBox(height: 6),
-          _term(
-            'Langganan diperpanjang otomatis di akhir setiap periode dan '
-            'ditagihkan ke akun Google Play Anda, kecuali dibatalkan '
-            'paling lambat 24 jam sebelum periode berakhir.',
-          ),
-          _term(
-            'Jika ada masa uji coba gratis, tagihan pertama dikenakan '
-            'otomatis saat uji coba berakhir kecuali Anda membatalkan '
-            'sebelumnya.',
-          ),
-          _term(
-            'Batalkan kapan saja melalui Google Play Store › Profil › '
-            'Pembayaran & langganan › Langganan.',
-          ),
-          _term(
-            'Langganan tidak wajib. Template surat gratis dan fitur dasar '
-            'tetap dapat digunakan tanpa berlangganan.',
-          ),
-          const SizedBox(height: 4),
-          GestureDetector(
-            onTap: () => launchUrl(
-              Uri.parse(_urlManageSubscriptions),
-              mode: LaunchMode.externalApplication,
+              },
             ),
-            child: const Text(
-              'Kelola langganan di Google Play',
-              style: TextStyle(
-                color: kPrimary,
-                fontSize: 12,
-                fontWeight: FontWeight.w600,
-                decoration: TextDecoration.underline,
-                decorationColor: kPrimary,
+            const SizedBox(height: 6),
+            _term(
+              'Langganan diperpanjang otomatis di akhir setiap periode dan '
+              'ditagihkan ke akun Google Play Anda, kecuali dibatalkan '
+              'paling lambat 24 jam sebelum periode berakhir.',
+            ),
+            _term(
+              'Jika ada masa uji coba gratis, tagihan pertama dikenakan '
+              'otomatis saat uji coba berakhir kecuali Anda membatalkan '
+              'sebelumnya.',
+            ),
+            _term(
+              'Batalkan kapan saja melalui Google Play Store › Profil › '
+              'Pembayaran & langganan › Langganan.',
+            ),
+            _term(
+              'Langganan tidak wajib. Template surat gratis dan fitur dasar '
+              'tetap dapat digunakan tanpa berlangganan.',
+            ),
+            const SizedBox(height: 4),
+            GestureDetector(
+              onTap: () => launchUrl(
+                Uri.parse(_urlManageSubscriptions),
+                mode: LaunchMode.externalApplication,
+              ),
+              child: const Text(
+                'Kelola langganan di Google Play',
+                style: TextStyle(
+                  color: kPrimary,
+                  fontSize: 12,
+                  fontWeight: FontWeight.w600,
+                  decoration: TextDecoration.underline,
+                  decorationColor: kPrimary,
+                ),
               ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
+      actions: [
+        TextButton(
+          onPressed: () => Navigator.pop(context),
+          child: const Text(
+            'Tutup',
+            style: TextStyle(color: kPrimary, fontWeight: FontWeight.w600),
+          ),
+        ),
+      ],
     );
   }
 
