@@ -1,3 +1,9 @@
+## 1.7.1 (18) - RELEASED
+
+* Kepatuhan Kebijakan Langganan Google Play: aplikasi dan paywall dikunci ke Bahasa Indonesia, ketentuan langganan (harga, perpanjangan otomatis, masa uji coba, cara membatalkan) ditampilkan sebelum membuka paywall
+* Ketentuan langganan di modal premium dan halaman Langganan kini berupa link "Lihat Ketentuan Langganan" yang membuka modal
+* Logo launcher icon diberi padding lebih agar tidak mepet ke tepi ikon
+
 ## 1.7.0 (17) - RELEASED
 
 * Perbaikan tinggi editor surat (buat & edit) yang mengecil saat keyboard muncul
