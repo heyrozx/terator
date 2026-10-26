@@ -127,7 +127,7 @@ const feature = ({ img, tone, title, sub, chips = [] }) => page(PW, PH, tone ===
 const SCREENS = [
   ['01-buat-surat-resmi', hero()],
   ['02-template-surat', feature({
-    img: 'template-list', tone: 'light', title: '100+ Template Surat',
+    img: 'template-list', tone: 'dark', title: '100+ Template Surat',
     sub: 'Sekolah, pekerjaan, desa, bisnis, kesehatan, dan lainnya',
   })],
   ['03-akun-surat', feature({
@@ -135,7 +135,7 @@ const SCREENS = [
     sub: 'Nama, alamat, dan tanda tangan terisi otomatis di setiap surat',
   })],
   ['04-isi-data-surat', feature({
-    img: 'isi-data-surat', tone: 'light', title: 'Isi Data Surat dengan Mudah',
+    img: 'isi-data-surat', tone: 'dark', title: 'Isi Data Surat dengan Mudah',
     sub: 'Lengkapi detail surat lewat formulir sederhana',
   })],
   ['05-edit-surat', feature({
@@ -143,7 +143,7 @@ const SCREENS = [
     sub: 'Ubah isi dan format teks sebelum surat disimpan',
   })],
   ['06-kop-surat', feature({
-    img: 'desain-kop', tone: 'light', title: 'Kop Surat Profesional',
+    img: 'desain-kop', tone: 'dark', title: 'Kop Surat Profesional',
     sub: 'Tambahkan logo dan identitas instansi dengan pilihan desain kop',
     chips: [{ name: 'crown', color: 'amber', text: 'Fitur Premium', x: 700, y: 470, rot: 4 }],
   })],
@@ -152,7 +152,7 @@ const SCREENS = [
     sub: 'Semua surat tersimpan rapi di menu File Saya',
   })],
   ['08-preview-surat', feature({
-    img: 'preview-surat', tone: 'light', title: 'Lihat Preview Sebelum Dipakai',
+    img: 'preview-surat', tone: 'dark', title: 'Lihat Preview Sebelum Dipakai',
     sub: 'Cek isi template lebih dulu, lalu gunakan dengan satu ketukan',
   })],
 ];
