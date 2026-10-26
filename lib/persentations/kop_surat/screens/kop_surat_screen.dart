@@ -210,8 +210,8 @@ class _KopSuratScreenState extends State<KopSuratScreen> {
               const SizedBox(width: 10),
               const Expanded(
                 child: Text(
-                  'Kop surat adalah fitur Premium. Kamu bisa mencoba mengaturnya '
-                  'sekarang, tapi kop baru bisa dipakai di surat setelah upgrade.',
+                  'Kop surat adalah fitur Premium. Kamu bisa mengaturnya sekarang, '
+                  'tapi kop baru bisa dipakai di surat setelah upgrade.',
                   style:
                       TextStyle(fontSize: 12, color: kTextPrimary, height: 1.4),
                 ),

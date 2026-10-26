@@ -450,7 +450,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                 icon: LucideIcons.crown,
                 color: const Color(0xFFD97706),
                 title: 'Fitur Premium',
-                subtitle: 'Kamu bisa mencoba mengatur kop surat, tapi '
+                subtitle: 'Kamu bisa mengatur kop surat sekarang, tapi '
                     'memakainya di surat perlu upgrade ke Premium. Kamu juga '
                     'bisa melewati langkah ini.',
               ),

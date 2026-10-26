@@ -1,3 +1,9 @@
+## Unreleased
+
+* Modal Ketentuan Langganan kini hanya berisi daftar ketentuan (tanpa harga paket) dan tidak lagi menyebut masa uji coba
+* Label paket seumur hidup dihapus
+* Teks kop surat untuk pengguna non-Premium tidak lagi memakai kata "mencoba"
+
 ## 1.7.1 (18) - RELEASED
 
 * Kepatuhan Kebijakan Langganan Google Play: aplikasi dan paywall dikunci ke Bahasa Indonesia, ketentuan langganan (harga, perpanjangan otomatis, masa uji coba, cara membatalkan) ditampilkan sebelum membuka paywall

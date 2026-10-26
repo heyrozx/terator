@@ -1,6 +1,4 @@
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:purchases_flutter/purchases_flutter.dart';
 import 'package:terator/core/styles.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -9,8 +7,8 @@ const String _urlManageSubscriptions =
 
 /// Tautan "Ketentuan Langganan" yang ditampilkan sebelum pengguna membuka
 /// paywall. Saat diketuk membuka modal berisi ketentuan lengkap (Kebijakan
-/// Langganan Google Play): harga, periode tagihan, perpanjangan otomatis,
-/// cara membatalkan, dan bahwa langganan tidak wajib.
+/// Langganan Google Play): perpanjangan otomatis, cara membatalkan, dan
+/// bahwa langganan tidak wajib.
 class SubscriptionTerms extends StatelessWidget {
   const SubscriptionTerms({super.key});
 
@@ -52,29 +50,9 @@ class SubscriptionTerms extends StatelessWidget {
   }
 }
 
-/// Isi modal ketentuan langganan. Harga diambil dari Google Play melalui
-/// RevenueCat sehingga selalu sesuai dengan yang ditagihkan.
-class _SubscriptionTermsDialog extends StatefulWidget {
+/// Isi modal ketentuan langganan.
+class _SubscriptionTermsDialog extends StatelessWidget {
   const _SubscriptionTermsDialog();
-
-  @override
-  State<_SubscriptionTermsDialog> createState() =>
-      _SubscriptionTermsDialogState();
-}
-
-class _SubscriptionTermsDialogState extends State<_SubscriptionTermsDialog> {
-  late final Future<List<Package>> _packages = _loadPackages();
-
-  Future<List<Package>> _loadPackages() async {
-    if (kIsWeb) return [];
-    try {
-      final offerings = await Purchases.getOfferings();
-      return offerings.current?.availablePackages ?? [];
-    } catch (e) {
-      if (kDebugMode) print('RevenueCat offerings error: $e');
-      return [];
-    }
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -97,34 +75,6 @@ class _SubscriptionTermsDialogState extends State<_SubscriptionTermsDialog> {
           mainAxisSize: MainAxisSize.min,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            FutureBuilder<List<Package>>(
-              future: _packages,
-              builder: (context, snapshot) {
-                if (snapshot.connectionState != ConnectionState.done) {
-                  return const Padding(
-                    padding: EdgeInsets.symmetric(vertical: 8),
-                    child: Center(
-                      child: SizedBox(
-                        width: 18,
-                        height: 18,
-                        child: CircularProgressIndicator(strokeWidth: 2),
-                      ),
-                    ),
-                  );
-                }
-                final packages = snapshot.data ?? [];
-                if (packages.isEmpty) {
-                  return _term(
-                    'Harga dan periode tagihan ditampilkan di halaman paket '
-                    'sebelum Anda membayar.',
-                  );
-                }
-                return Column(
-                  children: packages.map(_packageRow).toList(),
-                );
-              },
-            ),
-            const SizedBox(height: 6),
             _term(
               'Langganan diperpanjang otomatis di akhir setiap periode dan '
               'ditagihkan ke akun Google Play Anda, kecuali dibatalkan '
@@ -170,52 +120,7 @@ class _SubscriptionTermsDialogState extends State<_SubscriptionTermsDialog> {
     );
   }
 
-  Widget _packageRow(Package package) {
-    final product = package.storeProduct;
-    final option = product.defaultOption;
-    final period =
-        option?.billingPeriod ?? option?.fullPricePhase?.billingPeriod;
-    final periodLabel = _periodLabel(period);
-    final price = periodLabel.isEmpty
-        ? product.priceString
-        : '${product.priceString} / $periodLabel';
-    final detail = '$price, diperpanjang otomatis';
-
-    return Padding(
-      padding: const EdgeInsets.only(bottom: 8),
-      child: Row(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          const Padding(
-            padding: EdgeInsets.only(top: 2),
-            child: Icon(Icons.workspace_premium_rounded,
-                size: 16, color: kPrimary),
-          ),
-          const SizedBox(width: 8),
-          Expanded(
-            child: Text.rich(
-              TextSpan(
-                children: [
-                  TextSpan(
-                    text: '${_packageName(package, period)}: ',
-                    style: const TextStyle(fontWeight: FontWeight.w700),
-                  ),
-                  TextSpan(text: detail),
-                ],
-              ),
-              style: const TextStyle(
-                fontSize: 13,
-                color: kTextPrimary,
-                height: 1.4,
-              ),
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-
-  Widget _term(String text) {
+  static Widget _term(String text) {
     return Padding(
       padding: const EdgeInsets.only(bottom: 6),
       child: Row(
@@ -236,53 +141,5 @@ class _SubscriptionTermsDialogState extends State<_SubscriptionTermsDialog> {
         ],
       ),
     );
-  }
-
-  static String _packageName(Package package, Period? period) {
-    switch (package.packageType) {
-      case PackageType.weekly:
-        return 'Paket Mingguan';
-      case PackageType.monthly:
-        return 'Paket Bulanan';
-      case PackageType.twoMonth:
-        return 'Paket 2 Bulan';
-      case PackageType.threeMonth:
-        return 'Paket 3 Bulan';
-      case PackageType.sixMonth:
-        return 'Paket 6 Bulan';
-      case PackageType.annual:
-        return 'Paket Tahunan';
-      default:
-        return period != null ? 'Paket ${_duration(period)}' : 'Paket Premium';
-    }
-  }
-
-  /// "bulan", "3 bulan", "tahun", ... untuk teks harga per periode.
-  static String _periodLabel(Period? period) {
-    if (period == null) return '';
-    final unit = _unit(period.unit);
-    if (unit.isEmpty) return '';
-    return period.value == 1 ? unit : '${period.value} $unit';
-  }
-
-  /// "7 hari", "1 bulan", ... untuk nama paket.
-  static String _duration(Period period) {
-    final unit = _unit(period.unit);
-    return unit.isEmpty ? '' : '${period.value} $unit';
-  }
-
-  static String _unit(PeriodUnit unit) {
-    switch (unit) {
-      case PeriodUnit.day:
-        return 'hari';
-      case PeriodUnit.week:
-        return 'minggu';
-      case PeriodUnit.month:
-        return 'bulan';
-      case PeriodUnit.year:
-        return 'tahun';
-      default:
-        return '';
-    }
   }
 }
