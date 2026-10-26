@@ -252,8 +252,6 @@ class _SubscriptionTermsDialogState extends State<_SubscriptionTermsDialog> {
         return 'Paket 6 Bulan';
       case PackageType.annual:
         return 'Paket Tahunan';
-      case PackageType.lifetime:
-        return 'Paket Seumur Hidup';
       default:
         return period != null ? 'Paket ${_duration(period)}' : 'Paket Premium';
     }
