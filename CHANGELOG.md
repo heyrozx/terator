@@ -1,4 +1,4 @@
-## Unreleased
+## 1.7.2 (19) - RELEASED
 
 * Modal Ketentuan Langganan kini hanya berisi daftar ketentuan (tanpa harga paket) dan tidak lagi menyebut masa uji coba
 * Label paket seumur hidup dihapus
