@@ -37,9 +37,6 @@ const BASE_CSS = `
                  border-radius: 50%; background: #020617; box-shadow: 0 0 0 2px #1E293B; }
   .status .sys { display: flex; align-items: center; gap: calc(var(--w) * 0.012); }
   .status svg { height: calc(var(--w) * 0.034); width: auto; }
-  .float { position: absolute; display: grid; place-items: center; border-radius: 28%; background: #fff;
-           box-shadow: 0 18px 40px rgba(30, 27, 75, .28); }
-  .float svg { width: 52%; height: 52%; }
   .chip { position: absolute; display: flex; align-items: center; gap: 14px; background: #fff; color: #1E293B;
           border-radius: 999px; padding: 18px 30px 18px 18px; font-weight: 600; font-size: 30px;
           box-shadow: 0 18px 40px rgba(30, 27, 75, .28); white-space: nowrap; }
@@ -53,11 +50,6 @@ const COLORS = {
   amber: ['#D97706', '#FFFBEB'], red: ['#EF4444', '#FEF2F2'],
 };
 
-// Floating rounded tile with a colored lucide icon.
-const float = ({ name, color, x, y, size, rot = 0 }) => {
-  const [fg] = COLORS[color];
-  return `<div class="float" style="left:${x}px;top:${y}px;width:${size}px;height:${size}px;transform:rotate(${rot}deg);color:${fg}">${icon(name)}</div>`;
-};
 const chip = ({ name, color, text, x, y, rot = 0 }) => {
   const [fg, bg] = COLORS[color];
   return `<div class="chip" style="left:${x}px;top:${y}px;transform:rotate(${rot}deg)"><span class="ic" style="background:${bg};color:${fg}">${icon(name)}</span>${text}</div>`;
@@ -121,21 +113,14 @@ const PW = 1080, PH = 1920;
 const hero = () => page(PW, PH, 'bg-dark', `
   ${decor('dark', PW, PH)}
   ${headline({ tone: 'dark', top: 110, size: 76, title: 'Buat Surat Resmi<br>dalam Hitungan Menit', sub: '100+ template surat resmi siap pakai' })}
-  ${phone({ img: 'home', x: 95, y: 640, w: 520, rot: -9, z: 2 })}
-  ${phone({ img: 'editor', x: 470, y: 760, w: 520, rot: 7, z: 3 })}
-  ${float({ name: 'file-text', color: 'indigo', x: 60, y: 520, size: 130, rot: -10 })}
-  ${float({ name: 'pen-line', color: 'orange', x: 900, y: 560, size: 120, rot: 12 })}
-  ${float({ name: 'stamp', color: 'pink', x: 40, y: 1420, size: 116, rot: 8 })}
-  ${float({ name: 'signature', color: 'green', x: 905, y: 1560, size: 124, rot: -8 })}
-  ${float({ name: 'sparkles', color: 'amber', x: 520, y: 600, size: 92, rot: 10 })}
-  <div style="position:absolute;z-index:6">${chip({ name: 'file-check-2', color: 'green', text: 'Simpan sebagai PDF', x: 560, y: 1690, rot: -3 })}</div>
+  ${phone({ img: 'home', x: 60, y: 600, w: 580, rot: -8, z: 2 })}
+  ${phone({ img: 'template-list', x: 445, y: 690, w: 580, rot: 7, z: 3 })}
 `);
 
-const feature = ({ img, tone, title, sub, floats = [], chips = [] }) => page(PW, PH, tone === 'dark' ? 'bg-dark' : 'bg-light', `
+const feature = ({ img, tone, title, sub, chips = [] }) => page(PW, PH, tone === 'dark' ? 'bg-dark' : 'bg-light', `
   ${decor(tone, PW, PH)}
   ${headline({ tone, title, sub })}
-  ${phone({ img, x: 215, y: 560, w: 650, z: 2 })}
-  ${floats.map(float).join('')}
+  ${phone({ img, x: 130, y: 520, w: 820, z: 2 })}
   <div style="position:absolute;z-index:6">${chips.map(chip).join('')}</div>
 `);
 
@@ -144,65 +129,31 @@ const SCREENS = [
   ['02-template-surat', feature({
     img: 'template-list', tone: 'light', title: '100+ Template Surat',
     sub: 'Sekolah, pekerjaan, desa, bisnis, kesehatan, dan lainnya',
-    floats: [
-      { name: 'layout-template', color: 'indigo', x: 70, y: 700, size: 130, rot: -10 },
-      { name: 'file-text', color: 'orange', x: 890, y: 980, size: 120, rot: 10 },
-      { name: 'mail-check', color: 'green', x: 80, y: 1500, size: 116, rot: 8 },
-    ],
   })],
   ['03-akun-surat', feature({
     img: 'akun-surat', tone: 'dark', title: 'Simpan Data Diri Sekali',
     sub: 'Nama, alamat, dan tanda tangan terisi otomatis di setiap surat',
-    floats: [
-      { name: 'signature', color: 'violet', x: 70, y: 760, size: 128, rot: -8 },
-      { name: 'badge-check', color: 'green', x: 885, y: 1180, size: 118, rot: 10 },
-    ],
-    chips: [{ name: 'sparkles', color: 'amber', text: 'Terisi otomatis', x: 600, y: 1560, rot: -3 }],
   })],
   ['04-isi-data-surat', feature({
     img: 'isi-data-surat', tone: 'light', title: 'Isi Data Surat dengan Mudah',
     sub: 'Lengkapi detail surat lewat formulir sederhana',
-    floats: [
-      { name: 'clipboard-pen-line', color: 'blue', x: 75, y: 720, size: 128, rot: -9 },
-      { name: 'pen-line', color: 'orange', x: 885, y: 1040, size: 116, rot: 10 },
-      { name: 'sparkles', color: 'pink', x: 90, y: 1520, size: 104, rot: 6 },
-    ],
   })],
   ['05-edit-surat', feature({
     img: 'editor', tone: 'dark', title: 'Edit Surat Sesukamu',
     sub: 'Ubah isi dan format teks sebelum surat disimpan',
-    floats: [
-      { name: 'pen-line', color: 'orange', x: 70, y: 760, size: 128, rot: -10 },
-      { name: 'file-type-2', color: 'indigo', x: 890, y: 1120, size: 118, rot: 9 },
-    ],
-    chips: [{ name: 'badge-check', color: 'green', text: 'Format rapi otomatis', x: 90, y: 1580, rot: 3 }],
   })],
   ['06-kop-surat', feature({
     img: 'desain-kop', tone: 'light', title: 'Kop Surat Profesional',
     sub: 'Tambahkan logo dan identitas instansi dengan pilihan desain kop',
-    floats: [
-      { name: 'stamp', color: 'pink', x: 70, y: 740, size: 128, rot: -9 },
-      { name: 'layout-template', color: 'indigo', x: 890, y: 1500, size: 116, rot: 10 },
-    ],
-    chips: [{ name: 'crown', color: 'amber', text: 'Fitur Premium', x: 690, y: 690, rot: 4 }],
+    chips: [{ name: 'crown', color: 'amber', text: 'Fitur Premium', x: 700, y: 470, rot: 4 }],
   })],
   ['07-file-saya', feature({
     img: 'file-saya', tone: 'dark', title: 'Simpan & Bagikan PDF',
     sub: 'Semua surat tersimpan rapi di menu File Saya',
-    floats: [
-      { name: 'folder-open', color: 'amber', x: 70, y: 760, size: 128, rot: -9 },
-      { name: 'share-2', color: 'blue', x: 890, y: 1100, size: 116, rot: 10 },
-      { name: 'printer', color: 'violet', x: 80, y: 1500, size: 108, rot: 7 },
-    ],
-    chips: [{ name: 'download', color: 'green', text: 'Download PDF', x: 640, y: 1640, rot: -3 }],
   })],
   ['08-preview-surat', feature({
     img: 'preview-surat', tone: 'light', title: 'Lihat Preview Sebelum Dipakai',
     sub: 'Cek isi template lebih dulu, lalu gunakan dengan satu ketukan',
-    floats: [
-      { name: 'file-check-2', color: 'green', x: 70, y: 760, size: 128, rot: -9 },
-      { name: 'mail-check', color: 'indigo', x: 890, y: 1180, size: 116, rot: 10 },
-    ],
   })],
 ];
 
@@ -223,11 +174,8 @@ const featureGraphic = () => page(1024, 500, 'bg-dark', `
     <div style="font-size:34px;font-weight:700;line-height:1.25;margin-top:30px">Buat surat resmi dalam hitungan menit</div>
     <div style="font-size:18px;font-weight:500;opacity:.85;margin-top:12px">100+ template · Kop surat · Simpan PDF</div>
   </div>
-  ${phone({ img: 'home', x: 600, y: 70, w: 200, rot: -8, z: 2, pad: 6 })}
-  ${phone({ img: 'editor', x: 745, y: 110, w: 200, rot: 7, z: 3, pad: 6 })}
-  <div class="float" style="left:560px;top:330px;width:70px;height:70px;transform:rotate(-10deg);color:#F97316;z-index:4">${icon('pen-line')}</div>
-  <div class="float" style="left:930px;top:40px;width:62px;height:62px;transform:rotate(10deg);color:#10B981;z-index:4">${icon('file-check-2')}</div>
-  <div class="float" style="left:700px;top:22px;width:54px;height:54px;transform:rotate(8deg);color:#EC4899;z-index:4">${icon('stamp')}</div>
+  ${phone({ img: 'home', x: 560, y: 50, w: 230, rot: -8, z: 2, pad: 7 })}
+  ${phone({ img: 'file-saya', x: 740, y: 90, w: 230, rot: 7, z: 3, pad: 7 })}
 `);
 
 (async () => {
