@@ -9,8 +9,8 @@ const String _urlManageSubscriptions =
 
 /// Tautan "Ketentuan Langganan" yang ditampilkan sebelum pengguna membuka
 /// paywall. Saat diketuk membuka modal berisi ketentuan lengkap (Kebijakan
-/// Langganan Google Play): harga, periode tagihan, masa uji coba,
-/// perpanjangan otomatis, cara membatalkan, dan bahwa langganan tidak wajib.
+/// Langganan Google Play): harga, periode tagihan, perpanjangan otomatis,
+/// cara membatalkan, dan bahwa langganan tidak wajib.
 class SubscriptionTerms extends StatelessWidget {
   const SubscriptionTerms({super.key});
 
@@ -131,11 +131,6 @@ class _SubscriptionTermsDialogState extends State<_SubscriptionTermsDialog> {
               'paling lambat 24 jam sebelum periode berakhir.',
             ),
             _term(
-              'Jika ada masa uji coba gratis, tagihan pertama dikenakan '
-              'otomatis saat uji coba berakhir kecuali Anda membatalkan '
-              'sebelumnya.',
-            ),
-            _term(
               'Batalkan kapan saja melalui Google Play Store › Profil › '
               'Pembayaran & langganan › Langganan.',
             ),
@@ -184,11 +179,7 @@ class _SubscriptionTermsDialogState extends State<_SubscriptionTermsDialog> {
     final price = periodLabel.isEmpty
         ? product.priceString
         : '${product.priceString} / $periodLabel';
-
-    final trial = option?.freePhase?.billingPeriod;
-    final detail = trial != null
-        ? 'Gratis ${_duration(trial)}, lalu $price, diperpanjang otomatis'
-        : '$price, diperpanjang otomatis';
+    final detail = '$price, diperpanjang otomatis';
 
     return Padding(
       padding: const EdgeInsets.only(bottom: 8),
@@ -276,7 +267,7 @@ class _SubscriptionTermsDialogState extends State<_SubscriptionTermsDialog> {
     return period.value == 1 ? unit : '${period.value} $unit';
   }
 
-  /// "7 hari", "1 bulan", ... untuk lama uji coba / nama paket.
+  /// "7 hari", "1 bulan", ... untuk nama paket.
   static String _duration(Period period) {
     final unit = _unit(period.unit);
     return unit.isEmpty ? '' : '${period.value} $unit';
