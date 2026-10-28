@@ -7,8 +7,9 @@ const String _urlManageSubscriptions =
 
 /// Tautan "Ketentuan Langganan" yang ditampilkan sebelum pengguna membuka
 /// paywall. Saat diketuk membuka modal berisi ketentuan lengkap (Kebijakan
-/// Langganan Google Play): perpanjangan otomatis, cara membatalkan, dan
-/// bahwa langganan tidak wajib.
+/// Langganan Google Play). Paket Premium berupa base plan prabayar, jadi
+/// modal menjelaskan masa berlaku, bahwa paket tidak diperpanjang otomatis,
+/// cara memperpanjang manual, dan bahwa langganan tidak wajib.
 class SubscriptionTerms extends StatelessWidget {
   const SubscriptionTerms({super.key});
 
@@ -76,12 +77,19 @@ class _SubscriptionTermsDialog extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             _term(
-              'Langganan diperpanjang otomatis di akhir setiap periode dan '
-              'ditagihkan ke akun Google Play Anda, kecuali dibatalkan '
-              'paling lambat 24 jam sebelum periode berakhir.',
+              'Paket Premium dibayar di muka (prabayar) sekali melalui akun '
+              'Google Play Anda. Paket Bulanan berlaku 1 bulan dan Paket '
+              'Tahunan berlaku 12 bulan. Harga setiap paket ditampilkan '
+              'sebelum Anda membayar.',
             ),
             _term(
-              'Batalkan kapan saja melalui Google Play Store › Profil › '
+              'Paket tidak diperpanjang otomatis dan tidak ada tagihan '
+              'berulang. Akses Premium berakhir di akhir masa berlaku, '
+              'sehingga tidak perlu dibatalkan.',
+            ),
+            _term(
+              'Untuk melanjutkan Premium, perpanjang paket secara manual '
+              'melalui aplikasi ini atau Google Play Store › Profil › '
               'Pembayaran & langganan › Langganan.',
             ),
             _term(
