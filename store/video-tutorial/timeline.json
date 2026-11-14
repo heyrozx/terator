@@ -1,0 +1,157 @@
+[
+  {
+    "id": "S01_onboarding",
+    "t": 0,
+    "label": "Layar Panduan Memulai muncul saat pertama buka aplikasi"
+  },
+  {
+    "id": "S02_akun_buka",
+    "t": 2.5,
+    "label": "Tap \"Buat Akun Surat\""
+  },
+  {
+    "id": "S02_akun_data",
+    "t": 3.9,
+    "label": "Isi tab Akun: nama, TTL, jenis kelamin, agama, status"
+  },
+  {
+    "id": "S02_akun_pendidikan",
+    "t": 12.73,
+    "label": "Tab Pendidikan: pendidikan terakhir"
+  },
+  {
+    "id": "S02_akun_lainnya",
+    "t": 15.8,
+    "label": "Tab Lainnya: no. telp, email, kota, alamat"
+  },
+  {
+    "id": "S02_akun_ttd",
+    "t": 25.4,
+    "label": "Tab Tanda Tangan: gambar tanda tangan langsung di layar"
+  },
+  {
+    "id": "S02_akun_simpan",
+    "t": 35.43,
+    "label": "Tap \"Simpan Akun\" -> akun tersimpan"
+  },
+  {
+    "id": "S03_kop_buka",
+    "t": 36.63,
+    "label": "Langkah 2: Atur Kop Surat (opsional, Premium)"
+  },
+  {
+    "id": "S03_kop_logo",
+    "t": 38.03,
+    "label": "Upload logo instansi"
+  },
+  {
+    "id": "S03_kop_identitas",
+    "t": 41.23,
+    "label": "Isi identitas instansi"
+  },
+  {
+    "id": "S03_kop_desain",
+    "t": 49.43,
+    "label": "Pilih desain kop surat"
+  },
+  {
+    "id": "S03_kop_simpan",
+    "t": 54.87,
+    "label": "Simpan kop surat"
+  },
+  {
+    "id": "S04_template_step",
+    "t": 58.77,
+    "label": "Langkah 3: pilih kategori & template"
+  },
+  {
+    "id": "S04_selesai",
+    "t": 60.67,
+    "label": "Tap \"Selesai\" -> masuk Beranda"
+  },
+  {
+    "id": "S05_beranda",
+    "t": 62.97,
+    "label": "Beranda: kategori surat & pencarian"
+  },
+  {
+    "id": "S05_cari",
+    "t": 64.17,
+    "label": "Cari template \"lamaran\""
+  },
+  {
+    "id": "S05_pilih",
+    "t": 66.3,
+    "label": "Pilih \"Surat Lamaran Pekerjaan\""
+  },
+  {
+    "id": "S06_detail",
+    "t": 68.6,
+    "label": "Pratinjau template + opsi kop surat & bookmark"
+  },
+  {
+    "id": "S06_gunakan",
+    "t": 70.27,
+    "label": "Tap \"Gunakan Template\""
+  },
+  {
+    "id": "S07_isi_data",
+    "t": 71.87,
+    "label": "Isi Data Surat: perusahaan, alamat, posisi"
+  },
+  {
+    "id": "S08_pilih_akun",
+    "t": 81.57,
+    "label": "Pilih Akun Surat yang dipakai"
+  },
+  {
+    "id": "S08_ttd",
+    "t": 82.97,
+    "label": "Pakai tanda tangan? -> \"Ya, Gunakan\""
+  },
+  {
+    "id": "S09_editor",
+    "t": 87.07,
+    "label": "Editor: surat sudah terisi otomatis"
+  },
+  {
+    "id": "S09_edit",
+    "t": 90.3,
+    "label": "Edit bebas: tambah satu baris lampiran"
+  },
+  {
+    "id": "S09_simpan",
+    "t": 96.97,
+    "label": "Tap \"Simpan Surat\", beri nama file"
+  },
+  {
+    "id": "S09_download",
+    "t": 101.07,
+    "label": "Tap \"SIMPAN & DOWNLOAD\" -> PDF dibuat"
+  },
+  {
+    "id": "S10_file_saya",
+    "t": 103.67,
+    "label": "File Saya: surat tersimpan"
+  },
+  {
+    "id": "S10_opsi",
+    "t": 107.27,
+    "label": "Opsi file: preview, edit, ubah nama, berbagi, download, hapus"
+  },
+  {
+    "id": "S10_preview",
+    "t": 111.87,
+    "label": "Preview surat jadi (lengkap dengan tanda tangan)"
+  },
+  {
+    "id": "S11_beranda",
+    "t": 117.87,
+    "label": "Kembali ke Beranda (Surat Dibuat: 1)"
+  },
+  {
+    "id": "END",
+    "t": 121.77,
+    "label": "Selesai"
+  }
+]
